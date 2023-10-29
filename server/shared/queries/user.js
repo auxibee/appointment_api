@@ -5,4 +5,15 @@ async function create(email, password) {
   await query(statement, [email, password]);
 }
 
-module.exports = { create };
+async function getUserByEmail(email) {
+  const statement = 'Select id from users Where email = $1';
+  const results = await query(statement, [email]);
+  return results.rows[0];
+}
+
+async function deleteUsers() {
+  // used for testing
+  await query('Delete * From users');
+}
+
+module.exports = { create, getUserByEmail, deleteUsers };
