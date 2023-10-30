@@ -1,11 +1,11 @@
 
 
 ###
-POST http://localhost:8080/auth/register HTTP/1.1
+POST http://localhost:8080/auth/signup HTTP/1.1
 content-type: application/json
 
 {
-    "email": "seniorfresh@gmail.com",
+    "email": "senikofi@gmail.com",
     "password": "ontfdfdf"
 }
 
