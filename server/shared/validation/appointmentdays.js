@@ -22,7 +22,7 @@ const updateAppointmentDaySlotsValidation = [
   check('slots')
     .notEmpty()
     .withMessage('Slots cannot be empty')
-    .isInt({ min: 0, max: 100 })
+    .isInt({ min: 0, max: 10 })
     .withMessage('slots should be between 0 and 100'),
 ];
 
