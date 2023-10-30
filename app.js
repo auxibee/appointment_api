@@ -5,6 +5,7 @@ require('express-async-errors');
 
 const healthRoutes = require('./server/health/health.routes');
 const authRoutes = require('./server/auth/auth.routes');
+const appointmentDaysRoutes = require('./server/appointmentdays/appointmentdays.route');
 const { errorHandler, noRouteHandler } = require('./server/shared/middlewares/errorHandler');
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json());
 // routes
 app.use('/health', healthRoutes);
 app.use('/auth', authRoutes);
+app.use('/appointmentdays', appointmentDaysRoutes);
 
 // error middlewares
 app.use(noRouteHandler);
