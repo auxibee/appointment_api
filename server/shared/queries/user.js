@@ -6,7 +6,7 @@ async function create(email, password) {
 }
 
 async function getUserByEmail(email) {
-  const statement = 'Select id from users Where email = $1';
+  const statement = 'Select id, email, password from users Where email = $1';
   const results = await query(statement, [email]);
   return results.rows[0];
 }

@@ -8,4 +8,10 @@ async function newUserHandler(req, res) {
   res.status(201).json({ message: 'created' });
 }
 
-module.exports = { newUserHandler };
+async function loginHandler(req, res) {
+  const { email, password } = req.body;
+  await Service.loginUser(email, password);
+  res.json({ message: 'login' });
+}
+
+module.exports = { newUserHandler, loginHandler };
