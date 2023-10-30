@@ -11,7 +11,7 @@ before(async () => {
   AuthService.deleteUsers();
 });
 
-describe('POST /auth ', async () => {
+describe('POST /auth/register ', async () => {
   describe('Given that user is created succesfully', () => {
     it('responds with status 201 {message : created}', (done) => {
       request(app)
