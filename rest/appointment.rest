@@ -1,0 +1,20 @@
+
+
+###
+POST http://localhost:8080/appointment HTTP/1.1
+content-type: application/json
+
+{
+    "userId": "b9cc0b8b-1ae1-4411-8a4f-73586e9abc8b",
+    "appointmentDateId": "4bdf31d8-2420-488c-8a71-06756241c19b"
+}
+
+###
+POST http://localhost:8080/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "seniorfresh@gmail.com",
+    "password": "ontfdfdf"
+}
+
