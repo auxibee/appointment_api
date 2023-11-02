@@ -1,8 +1,10 @@
 const express = require('express');
-const { newUserHandler } = require('./auth.controller');
+const { newUserHandler, loginHandler } = require('./auth.controller');
+const { authValidation } = require('../shared/validation/auth');
 
 const router = express.Router();
 
-router.post('/', newUserHandler);
+router.post('/signup', authValidation, newUserHandler);
+router.post('/login', authValidation, loginHandler);
 
 module.exports = router;
