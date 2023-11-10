@@ -7,6 +7,7 @@ const ApiError = require('../shared/utils/apiError');
 class AppointmentService {
   async createAppointment(userId, appointmentDateId) {
     const appointment = await getAppoitmentByUserId(userId);
+    console.log(appointment);
     if (appointment !== 0) {
       throw new ApiError('Delete appointment before creating another one', 403);
     }

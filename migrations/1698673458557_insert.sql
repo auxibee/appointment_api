@@ -20,7 +20,7 @@ INSERT INTO "appointment" ("user_id", "appointment_day_id")
 	WHERE "users"."email" = 'amaakosua@gmail.com'  and "day" = '2023-10-15';
 
 INSERT INTO "appointment_detail" ("appointment_id", "first_name", "last_name")
-    SELECT "appointment"."id", 'kofi' as "first_name", 'Acheampong' as "last_name" FROM "appointment";
+    SELECT "appointment"."id", 'kofi' as "first_name", 'Acheampong' as "last_name" FROM "appointment" LIMIT 1 OFFSET 0;
 
 INSERT INTO "appointment_detail" ("appointment_id", "first_name", "last_name")
     SELECT "appointment"."id", 'Yaw' as "first_name", 'Twumasi' as "last_name" FROM "appointment" LIMIT 1 OFFSET 1;

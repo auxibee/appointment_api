@@ -4,9 +4,10 @@
 POST http://localhost:8080/appointment HTTP/1.1
 content-type: application/json
 
+
 {
-    "userId": "b9cc0b8b-1ae1-4411-8a4f-73586e9abc8b",
-    "appointmentDateId": "4bdf31d8-2420-488c-8a71-06756241c19b"
+    "userId": "5de63dc4-7a47-4e04-a978-05ad25c0dfa5",
+    "appointmentDateId": "9c83377f-9760-444e-b99e-342d20476e31"
 }
 
 ###
