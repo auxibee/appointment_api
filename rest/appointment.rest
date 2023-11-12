@@ -6,16 +6,35 @@ content-type: application/json
 
 
 {
-    "userId": "5de63dc4-7a47-4e04-a978-05ad25c0dfa5",
-    "appointmentDateId": "9c83377f-9760-444e-b99e-342d20476e31"
+    "userId": 1,
+    "appointmentDayId": 6
 }
 
 ###
-POST http://localhost:8080/auth/login HTTP/1.1
+PUT http://localhost:8080/appointment/3
 content-type: application/json
 
 {
-    "email": "seniorfresh@gmail.com",
-    "password": "ontfdfdf"
+    "appointmentDayId": 8
 }
 
+###
+DELETE  http://localhost:8080/appointment/3 HTTP/1.1
+content-type: application/json
+
+###
+POST http://localhost:8080/appointment/4/appointmentDetails
+content-type: application/json
+
+{
+    "firstName": "Kofi",
+    "lastName": "Power"
+}
+
+###
+DELETE  http://localhost:8080/appointment/4/appointmentDetails?detailId=1 HTTP/1.1
+content-type: application/json
+
+###
+GET   http://localhost:8080/appointment HTTP/1.1
+content-type: application/json

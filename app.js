@@ -5,9 +5,10 @@ require('express-async-errors');
 
 const healthRoutes = require('./server/health/health.routes');
 const authRoutes = require('./server/auth/auth.routes');
-const appointmentDaysRoutes = require('./server/appointmentdays/appointmentdays.route');
+const adminRoutes = require('./server/admin/admin.router');
 const appointmentRoutes = require('./server/appointment/appointment.routes');
 const { errorHandler, noRouteHandler } = require('./server/shared/middlewares/errorHandler');
+const { setAuthenticatedUser } = require('./server/shared/middlewares/setAuthenticatedUser');
 
 const app = express();
 
@@ -15,12 +16,14 @@ const app = express();
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(setAuthenticatedUser)
 
 // routes
 app.use('/health', healthRoutes);
 app.use('/auth', authRoutes);
-app.use('/appointmentdays', appointmentDaysRoutes);
+app.use('/admin', adminRoutes);
 app.use('/appointment', appointmentRoutes);
+
 
 // error middlewares
 app.use(noRouteHandler);

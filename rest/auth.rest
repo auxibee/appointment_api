@@ -14,7 +14,6 @@ POST http://localhost:8080/auth/login HTTP/1.1
 content-type: application/json
 
 {
-    "email": "seniorfresh@gmail.com",
+    "email": "kofipower@gmail.com",
     "password": "ontfdfdf"
 }
-

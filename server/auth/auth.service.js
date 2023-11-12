@@ -2,23 +2,25 @@
 /* eslint-disable class-methods-use-this */
 
 const bcrypt = require('bcrypt');
-const { getUserByEmail, create, deleteUsers } = require('../shared/queries/user');
+const {User} = require('../../models')
 const ApiError = require('../shared/utils/apiError');
 const { hashPassword } = require('../shared/utils/hashPassword');
 
+
 class UserService {
   async createUser(email, password) {
-    const user = await getUserByEmail(email);
-
+    const user = await User.findOne({where: {email: email}})
+    
     if (user) {
       throw new ApiError('User already exits', 403);
     }
-    const hashed = await hashPassword(password);
-    await create(email, hashed);
+    const hash = await hashPassword(password)
+    await User.create({email, password: hash})
+   
   }
 
   async loginUser(email, password) {
-    const user = await getUserByEmail(email);
+    const user = await User.findOne({where: {email: email}});
     if (!user) {
       throw new ApiError('Wrong username or password', 403);
     }
@@ -30,9 +32,7 @@ class UserService {
     }
   }
 
-  async deleteUsers() {
-    await deleteUsers();
-  }
+  
 }
 
 module.exports = UserService;
