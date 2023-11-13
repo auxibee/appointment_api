@@ -1,6 +1,7 @@
 const { generateDays } = require('../shared/utils/generateDays');
 const {AppointmentDay} = require('../../models')
 const ApiError = require('../shared/utils/apiError');
+const errorCodes = require('../shared/statusCodes');
 
 class AdminService{
 
@@ -9,7 +10,7 @@ class AdminService{
         const isDaysCreated = await AppointmentDay.findOne({where: {day: days[0].day}})
     
         if (isDaysCreated) {
-          throw new ApiError('Days already created', 403);
+          throw new ApiError('Days already created', errorCodes.FORBIDDEN);
         }
      
         await AppointmentDay.bulkCreate(days)
