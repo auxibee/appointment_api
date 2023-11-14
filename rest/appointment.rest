@@ -1,0 +1,40 @@
+
+
+###
+POST http://localhost:8080/appointment HTTP/1.1
+content-type: application/json
+
+
+{
+    "userId": 1,
+    "appointmentDayId": 6
+}
+
+###
+PUT http://localhost:8080/appointment/3
+content-type: application/json
+
+{
+    "appointmentDayId": 8
+}
+
+###
+DELETE  http://localhost:8080/appointment/3 HTTP/1.1
+content-type: application/json
+
+###
+POST http://localhost:8080/appointment/4/appointmentDetails
+content-type: application/json
+
+{
+    "firstName": "Kofi",
+    "lastName": "Power"
+}
+
+###
+DELETE  http://localhost:8080/appointment/4/appointmentDetails?detailId=1 HTTP/1.1
+content-type: application/json
+
+###
+GET   http://localhost:8080/appointment HTTP/1.1
+content-type: application/json
