@@ -9,6 +9,7 @@ const adminRoutes = require('./server/admin/admin.router');
 const appointmentRoutes = require('./server/appointment/appointment.routes');
 const { errorHandler, noRouteHandler } = require('./server/shared/middlewares/errorHandler');
 const { setAuthenticatedUser } = require('./server/shared/middlewares/setAuthenticatedUser');
+const { requireAuth } = require('./server/shared/middlewares/authRequired');
 
 const app = express();
 
@@ -21,8 +22,8 @@ app.use(setAuthenticatedUser)
 // routes
 app.use('/health', healthRoutes);
 app.use('/auth', authRoutes);
-app.use('/admin', adminRoutes);
-app.use('/appointment', appointmentRoutes);
+app.use('/admin',requireAuth, adminRoutes);
+app.use('/appointment',requireAuth, appointmentRoutes);
 
 
 // error middlewares
