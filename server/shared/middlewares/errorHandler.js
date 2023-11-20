@@ -7,7 +7,7 @@ const noRouteHandler = async (req, res, next) => {
 // eslint-disable-next-line no-unused-vars
 const errorHandler = async (error, req, res, next) => {
   const status = error.statusCode || 500;
-  const message = error.message || 'Internal server error';
+  const message = status === 500 ? 'Internal server error' : error.message ;
   res.status(status).json({ error: message });
 };
 

@@ -4,8 +4,9 @@ const ApiError = require("../utils/apiError")
 const config = require("../../config/general")
 
 function requireAuth(req, res, next){
-    const token = req.headers.authourization
-    if(token){
+    const token = req.headers.authorization
+    
+    if(!token){
         throw new ApiError('Invalid Authentication', statusCodes.UNAUTHOURIZED)
     }
     try {

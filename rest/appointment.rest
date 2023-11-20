@@ -3,10 +3,10 @@
 ###
 POST http://localhost:8080/appointment HTTP/1.1
 content-type: application/json
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.a29maXBvd2VyQGdtYWlsLmNvbQ.BEeAiNHkrKw7Dpvzj5hrvkzT2ZuxzfDl8xA5sT1bdFw
 
 {
-    "userId": 1,
+    "userId": 2,
     "appointmentDayId": 6
 }
 

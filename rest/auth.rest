@@ -5,7 +5,7 @@ POST http://localhost:8080/auth/signup HTTP/1.1
 content-type: application/json
 
 {
-    "email": "kofipower@gmail.com",
+    "email": "aujjjxibee@gmail.com",
     "password": "ontfdfdf"
 }
 

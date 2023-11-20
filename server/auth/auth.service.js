@@ -10,14 +10,15 @@ const errorCodes = require('../shared/statusCodes');
 
 class UserService {
   async createUser(email, password) {
-    const user = await User.findOne({where: {email: email}})
+    const  user = await User.findOne({where: {email: email}})
     
     if (user) {
       throw new ApiError('User already exits', errorCodes.FORBIDDEN);
     }
     const hash = await hashPassword(password)
-    await User.create({email, password: hash})
-   
+    const newuser = await User.create({email, password: hash})
+    return newuser
+
   }
 
   async loginUser(email, password) {
@@ -31,6 +32,8 @@ class UserService {
     if (!isPasswordValid) {
       throw new ApiError('Wrong username or password', errorCodes.FORBIDDEN);
     }
+
+    return user.toJSON()
   }
 
   

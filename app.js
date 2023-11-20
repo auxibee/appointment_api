@@ -8,16 +8,25 @@ const authRoutes = require('./server/auth/auth.routes');
 const adminRoutes = require('./server/admin/admin.router');
 const appointmentRoutes = require('./server/appointment/appointment.routes');
 const { errorHandler, noRouteHandler } = require('./server/shared/middlewares/errorHandler');
-const { setAuthenticatedUser } = require('./server/shared/middlewares/setAuthenticatedUser');
+
 const { requireAuth } = require('./server/shared/middlewares/authRequired');
+const { createSuperAdmin } = require('./server/shared/utils/createSuperAdmin');
+const config = require('./server/config/general');
+
 
 const app = express();
+
+// set up super admin
+if(config.NODE_ENV !== 'test'){
+    createSuperAdmin()
+}
+
 
 // middlewares
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(setAuthenticatedUser)
+
 
 // routes
 app.use('/health', healthRoutes);
