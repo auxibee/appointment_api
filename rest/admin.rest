@@ -1,0 +1,19 @@
+###
+POST http://localhost:8080/admin/appointmentdays HTTP/1.1
+content-type: application/json
+
+{
+    "year": 2023,
+    "month": 2
+}
+
+###
+PUT  http://localhost:8080/appointmentdays/df7bfe5c-9d68-41be-9401-b5085901d7c2 HTTP/1.1
+content-type: application/json
+
+{
+    "slots": 10
+}
+
+
+
