@@ -1,0 +1,19 @@
+
+
+###
+POST http://localhost:8080/auth/signup HTTP/1.1
+content-type: application/json
+
+{
+    "email": "aujjjxibee@gmail.com",
+    "password": "ontfdfdf"
+}
+
+###
+POST http://localhost:8080/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "kofipower@gmail.com",
+    "password": "ontfdfdf"
+}
