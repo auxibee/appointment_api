@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   AppointmentDay.init({
-    day: DataTypes.DATE
+    day: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'AppointmentDay',

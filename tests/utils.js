@@ -13,4 +13,13 @@ async function loginUser(request, email, password){
 
 }
 
-module.exports = {createUser, loginUser }
+async function createAppointmentDays(request,token, year, month){
+    const response = await request.post('/admin/appointmentdays')
+                                    .send({year, month })
+                                    .set('Accept', 'application/json')
+                                    .set('Authorization', `Bearer ${token}`)
+                                
+    return response
+}
+
+module.exports = {createUser, loginUser, createAppointmentDays }
