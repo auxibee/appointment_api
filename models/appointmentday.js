@@ -15,7 +15,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   AppointmentDay.init({
-    day: DataTypes.DATE
+    day: DataTypes.DATE,
+    slots: DataTypes.NUMBER,
+    status: DataTypes.ENUM('open','closed'),
   }, {
     sequelize,
     modelName: 'AppointmentDay',
