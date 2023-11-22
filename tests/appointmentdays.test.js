@@ -34,6 +34,13 @@ describe('POST /appointmentdays', function(){
 
         expect(appointmentDays.status).to.eql(statusCodes.FORBIDDEN)
     })
+
+    it('fails without year input', async function(){
+        const appointmentDays = await createAppointmentDays(request, login.body.token, '', 10)
+        
+        expect(appointmentDays.status).to.eql(statusCodes.FORBIDDEN)
+        
+    })
   
    
   })
