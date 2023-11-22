@@ -12,7 +12,7 @@ const appointmentDaysValidation = [
   check('month')
     .notEmpty()
     .withMessage('Month cannot be empty')
-    .isNumeric()
+    .isInt({min: 0, max: 12})
     .withMessage('Month should be valid'),
 
   requestValidator,
