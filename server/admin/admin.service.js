@@ -13,13 +13,17 @@ class AdminService{
           throw new ApiError('Days already created', errorCodes.FORBIDDEN);
         }
      
-        const res = await AppointmentDay.bulkCreate(days, {returned: true})
-        return res
+        const response = await AppointmentDay.bulkCreate(days, {returned: true})
+        return response
       }
     
       async updateAppointmentDaySlots(id, slots) {
-        await updateSlot(id, slots);
-      }
+         const appointmentDay = await  AppointmentDay.findOne({where : { id : id}})
+         appointmentDay.slots = slots
+         await appointmentDay.save()
+         return appointmentDay 
+        
+        }
 }
 
 module.exports = { AdminService }

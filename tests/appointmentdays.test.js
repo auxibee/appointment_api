@@ -5,7 +5,7 @@ const statusCodes = require("../server/shared/statusCodes");
 const { createSuperAdmin } = require("../server/shared/utils/createSuperAdmin");
 
 const { request, expect } = require("./config");
-const { loginUser, createAppointmentDays } = require("./utils");
+const { loginUser, createAppointmentDays, updateAppointmentDaySlot } = require("./utils");
 
 
 
@@ -46,6 +46,15 @@ describe('POST /appointmentdays', function(){
         const appointmentDays = await createAppointmentDays(request, login.body.token, 2, '')
         
         expect(appointmentDays.status).to.eql(statusCodes.FORBIDDEN)
+    })
+
+    it('updates avialable slots for appointment', async function(){
+        // const appointmentDays = await createAppointmentDays(request,login.body.token, 2023, 12)
+
+        const appointmentDay = await updateAppointmentDaySlot(request, login.body.token, 50)
+        console.log(appointmentDay.body);
+        expect(appointmentDay.status).to.eql(200)
+
     })
   
    

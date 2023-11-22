@@ -11,8 +11,8 @@ async function createAppointmentDaysHandler(req, res) {
   async function updateAppointmentDaySlotsHandler(req, res) {
     const { slots } = req.body;
     const { id } = req.params;
-    await Service.updateAppointmentDaySlots(id, slots);
-    res.json({ message: 'updated' });
+    const appointmentday = await Service.updateAppointmentDaySlots(id, slots);
+    res.json(appointmentday);
   }
   
   module.exports = { createAppointmentDaysHandler, updateAppointmentDaySlotsHandler };

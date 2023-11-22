@@ -5,6 +5,6 @@ const { appointmentDaysValidation, updateAppointmentDaySlotsValidation } = requi
 const router = express.Router();
 
 router.post('/appointmentdays', appointmentDaysValidation, createAppointmentDaysHandler);
-router.put('/:id', updateAppointmentDaySlotsValidation, updateAppointmentDaySlotsHandler);
+router.put('/appointmentday/:id', updateAppointmentDaySlotsValidation, updateAppointmentDaySlotsHandler);
 
 module.exports = router;

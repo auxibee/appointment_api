@@ -20,4 +20,11 @@ async function createAppointmentDays(request, token, year, month){
     return response
 }
 
-module.exports = {createUser, loginUser, createAppointmentDays }
+async function updateAppointmentDaySlot(request, token, slots){
+    const response =  await request.put('/admin/appointmentday/1')
+                                    .set('Authorization', `Bearer ${token}`)
+                                    .send({slots : slots})
+    return response
+}
+
+module.exports = {createUser, loginUser, createAppointmentDays, updateAppointmentDaySlot }
