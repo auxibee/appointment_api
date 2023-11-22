@@ -17,9 +17,9 @@ const config = require('./server/config/general');
 const app = express();
 
 // set up super admin
-if(config.NODE_ENV !== 'test'){
-    createSuperAdmin()
-}
+// if(config.NODE_ENV !== 'test'){
+//     createSuperAdmin()
+// }
 
 
 // middlewares
