@@ -9,7 +9,7 @@ const config = {
   JWT_AlGORITHM: process.env.JWT_AlGORITHM,
   ADMIN_EMAIL : process.env.ADMIN_EMAIL,
   ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
-  NODE_ENV : process.env.NODE_ENV
+  NODE_ENV : process.env.NODE_ENV || 'development'
 };
 
 module.exports = config;
