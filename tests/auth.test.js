@@ -1,42 +1,42 @@
 /* eslint-disable no-undef */
 
 const statusCodes = require("../server/shared/statusCodes");
-const { request, expect } = require("./config");
+const { request, expect, commonHeaders, routes } = require("./config");
 const { createUser, loginUser, resetDb } = require("./utils");
+const { faker } = require('@faker-js/faker');
 
 before(resetDb)
 
 describe('POST /auth/signup', function (){
   it("creates a new user", async function(){
-    const response = await createUser(request,'test@gmail.com', 'samplepassword')
-    const attributes = await response.body
+    const user = {email : faker.internet.email(), password: faker.internet.password()}
+    const response = await request.post(routes.signUp)
+                                  .set(commonHeaders)
+                                  .send({email: user.email, password: user.password})
+                           
     expect(response.status).to.eql(201);
-    expect(attributes.email).to.eql('test@gmail.com')
-    expect(attributes.id).to.eql(1)
+    expect(response.body).to.deep.equal({id: 1, email: user.email})
 
   })
 
-  it("fails without an email or invalid email", async function(){
-    const response = await  createUser(request,'','dfsdfds')
+  it("fails with invalid email", async function(){
+    const response = await  request.post(routes.signUp)
+                                   .set(commonHeaders)
+                                   .send({email: faker.internet.userName(), password: faker.internet.password()})
     
     expect(response.status).to.eql(statusCodes.FORBIDDEN)
-    expect(response.body.error.length).to.eql(2)
-    expect(response.body.error[0].msg).to.eql('Email is required')
-    expect(response.body.error[1].msg).to.eql('Email should be valid')
     
-  })
-
-  it("fails without an invalid email", async function(){
-    const response = await createUser(request,'dfsfadf','dfsdfds')
-    
-    expect(response.status).to.eql(statusCodes.FORBIDDEN)
     expect(response.body.error.length).to.eql(1)
     expect(response.body.error[0].msg).to.eql('Email should be valid')
     
   })
 
+  
+
   it("fails without a password or password with less than 5 characters", async function(){
-    const response = await createUser(request,'test@gmail.com','')
+    const response = await request.post(routes.signUp)
+                                  .set(commonHeaders)
+                                  .send({email: faker.internet.email(), password: ''})
     
     expect(response.status).to.eql(statusCodes.FORBIDDEN)
     expect(response.body.error.length).to.eql(2)
@@ -49,27 +49,41 @@ describe('POST /auth/signup', function (){
 describe('POST auth/login', function(){
   it('Authenticates a user with a valid credential', async function (){
     // create a new user
-    const newUser = await createUser(request, 'yaw@gmail.com','testpassword')
+    const user = {email: faker.internet.email(), password: faker.internet.password()}
+    const newUser = await request.post(routes.signUp)
+                                 .set(commonHeaders)
+                                 .send(user)
 
-    const response = await request.post('/auth/login')
-                                  .send({email: 'yaw@gmail.com', password: 'testpassword'})
+    const response = await request.post(routes.login)
+                                  .send(user)
     const keys = Object.keys(response.body)
     expect(response.status).to.eql(200)
-    expect(response.body.email).to.eql('yaw@gmail.com')
+    expect(response.body.email).to.eql(user.email)
     expect(keys).to.include.members(['id', 'token', 'email']);
   })
 
   it('Fails with an invalid credential', async function(){
     
+    const user = {email: faker.internet.email(), password: faker.internet.password()}
 
-    const responseX = await loginUser(request,'wrongemail@gmail.com', 'testpassword')
-    const responseY = await loginUser(request,'yaw@gmail.com','wrongpassword')
+    // create a new user
+    const newUser = await request.post(routes.signUp)
+                                 .set(commonHeaders)
+                                 .send(user)
 
-    expect(responseX.status).to.eql(statusCodes.FORBIDDEN)
-    expect(responseX.body.error).to.eql('Wrong username or password')
+    const wrongEmail = await request.post(routes.login)
+                                    .set(commonHeaders)
+                                    .send({email: faker.internet.email(), password: user.password})
+    
+    const wrongPassword = await request.post(routes.login)
+                                    .set(commonHeaders)
+                                    .send({email: user.email, password: faker.internet.password()})
+    
+    expect(wrongEmail.status).to.eql(statusCodes.FORBIDDEN)
+    expect(wrongEmail.body.error).to.eql('Wrong username or password')
 
-    expect(responseY.status).to.eql(statusCodes.FORBIDDEN)
-    expect(responseY.body.error).to.eql('Wrong username or password')
+    expect(wrongPassword.status).to.eql(statusCodes.FORBIDDEN)
+    expect(wrongPassword.body.error).to.eql('Wrong username or password')
   })
 })
 

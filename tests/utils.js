@@ -23,7 +23,7 @@ async function createAppointmentDays(request, token, year, month){
 }
 
 async function updateAppointmentDaySlot(request, token, slots){
-    const response =  await request.put('/admin/appointmentday/1')
+    const response =  await request.put('/admin/appointmentday/311')
                                     .set('Authorization', `Bearer ${token}`)
                                     .send({slots : slots})
     return response

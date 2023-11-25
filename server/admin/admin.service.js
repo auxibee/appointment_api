@@ -19,6 +19,7 @@ class AdminService{
     
       async updateAppointmentDaySlots(id, slots) {
          const appointmentDay = await  AppointmentDay.findOne({where : { id : id}})
+         console.log(appointmentDay);
          appointmentDay.slots = slots
          await appointmentDay.save()
          return appointmentDay 
