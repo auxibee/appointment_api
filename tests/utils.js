@@ -1,3 +1,5 @@
+const db = require("../models")
+
 async function createUser(request,email, password){
     const response = await request.post('/auth/signup')
                                   .send({email: email, password: password})
@@ -27,4 +29,27 @@ async function updateAppointmentDaySlot(request, token, slots){
     return response
 }
 
-module.exports = {createUser, loginUser, createAppointmentDays, updateAppointmentDaySlot }
+async function createAppointment(request, token,userId, appointmentDayId){
+    const response =  await request.post('/appointment')
+                                    .set('Authorization', `Bearer ${token}`)
+                                    .send({userId, appointmentDayId})
+    return response
+}
+
+async function resetDb(){
+    console.log('Reseting database.....');
+    Object.values(db.sequelize.models).map(async function(model){
+        await model.destroy({truncate: true, restartIdentity: true})
+        await db.sequelize.query(`DELETE FROM "sqlite_sequence" WHERE "name" = 'Users'`)
+    })
+   
+}
+
+module.exports = {
+    createUser, 
+    loginUser, 
+    createAppointmentDays, 
+    updateAppointmentDaySlot, 
+    createAppointment,
+    resetDb
+ }

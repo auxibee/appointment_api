@@ -2,7 +2,9 @@
 
 const statusCodes = require("../server/shared/statusCodes");
 const { request, expect } = require("./config");
-const { createUser, loginUser } = require("./utils");
+const { createUser, loginUser, resetDb } = require("./utils");
+
+before(resetDb)
 
 describe('POST /auth/signup', function (){
   it("creates a new user", async function(){
