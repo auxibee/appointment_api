@@ -16,10 +16,15 @@ class AdminService{
         const response = await AppointmentDay.bulkCreate(days, {returned: true})
         return response
       }
+
+      async findAppointmentDayById(id){
+        const response = await AppointmentDay.findByPk(id)
+        return response
+      }
     
       async updateAppointmentDaySlots(id, slots) {
          const appointmentDay = await  AppointmentDay.findOne({where : { id : id}})
-         console.log(appointmentDay);
+         
          appointmentDay.slots = slots
          await appointmentDay.save()
          return appointmentDay 

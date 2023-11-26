@@ -10,10 +10,23 @@ async function createAppointmentDaysHandler(req, res) {
   
   async function updateAppointmentDaySlotsHandler(req, res) {
     const { slots } = req.body;
-    const { id } = req.params;
-    const appointmentday = await Service.updateAppointmentDaySlots(id, slots);
-    res.json(appointmentday);
+    const { appointmentDayId } = req.params;
+    const appointmentday = await Service.updateAppointmentDaySlots(appointmentDayId, slots);
+  res.json({name: 'yaw'});
+  }
+
+  async function loadAppointmentDay(req, res, next, appointmentDayId){
+    const appointmentDay = await Service.findAppointmentDayById(appointmentDayId)
+    if(!appointmentDay){
+      res.status(statusCodes.NOT_FOUND).json({message: 'not found'})
+    }
+    req.appointmentDay = appointmentDay
+    next()
+
   }
   
-  module.exports = { createAppointmentDaysHandler, updateAppointmentDaySlotsHandler };
+  module.exports = { 
+    createAppointmentDaysHandler, 
+    updateAppointmentDaySlotsHandler, 
+    loadAppointmentDay };
   

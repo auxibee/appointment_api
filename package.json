@@ -7,7 +7,7 @@
     "start": "node bin/www.js",
     "dev": "nodemon www/bin.js",
     "migrate-testdb": "npx sequelize db:migrate --env=test",
-    "test": "cross-env NODE_ENV=test mocha tests/**/*test.js --reporter spec --grep",
+    "test": "cross-env NODE_ENV=test mocha tests/**/*test.js --reporter spec ",
     "lint": "eslint"
   },
   "repository": {

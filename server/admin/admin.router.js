@@ -1,10 +1,11 @@
 const express = require('express');
-const { createAppointmentDaysHandler, updateAppointmentDaySlotsHandler } = require('./admin.controller');
+const { createAppointmentDaysHandler, updateAppointmentDaySlotsHandler, loadAppointmentDay } = require('./admin.controller');
 const { appointmentDaysValidation, updateAppointmentDaySlotsValidation } = require('../shared/validation/appointmentdays');
 
 const router = express.Router();
 
 router.post('/appointmentdays', appointmentDaysValidation, createAppointmentDaysHandler);
-router.put('/appointmentday/:id', updateAppointmentDaySlotsValidation, updateAppointmentDaySlotsHandler);
+router.param('appointmentDayId', loadAppointmentDay)
+router.put('/appointmentday/:appointmentDayId', updateAppointmentDaySlotsValidation, updateAppointmentDaySlotsHandler);
 
 module.exports = router;

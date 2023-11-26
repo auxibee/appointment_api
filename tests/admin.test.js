@@ -5,18 +5,25 @@ const statusCodes = require("../server/shared/statusCodes");
 const { createSuperAdmin } = require("../server/shared/utils/createSuperAdmin");
 
 const { request, expect } = require("./config");
-const { loginUser, createAppointmentDays, updateAppointmentDaySlot } = require("./utils");
+const { loginUser, createAppointmentDays, updateAppointmentDaySlot, resetDb } = require("./utils");
 
+
+  
+let login;
+before(async function(){
+    // reset database
+    await resetDb()
+    
+    // create an admin user
+    await createSuperAdmin()
+    login = await loginUser(request, 'fresh@gmail.com','217317auxI*')
+    console.log(login.body);
+})
 
 
 
 describe('POST /appointmentdays', function(){
-    let login;
-    before(async function(){
-        // create an admin user
-        await createSuperAdmin()
-        login = await loginUser(request, 'fresh@gmail.com','217317auxI*')
-    })
+ 
 
     it('Creates appointment days', async function (){
       
@@ -56,6 +63,8 @@ describe('POST /appointmentdays', function(){
         expect(appointmentDay.status).to.eql(200)
 
     })
+
+   
   
    
   })

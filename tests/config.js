@@ -9,6 +9,9 @@ const commonHeaders = {
 
 const routes = {
     signUp : '/auth/signup',
-    login: '/auth/login'
+    login: '/auth/login',
+    appointmentDays: '/admin/appointmentdays',
+    updateAppointmentDay: '/admin/appointmentday/1',
+    createAppointment: '/appointment'
 }
 module.exports = { request, expect, commonHeaders, routes }

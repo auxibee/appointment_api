@@ -1,4 +1,5 @@
 const db = require("../models")
+const { routes } = require("./config")
 
 async function createUser(request,email, password){
     const response = await request.post('/auth/signup')
@@ -16,21 +17,21 @@ async function loginUser(request, email, password){
 }
 
 async function createAppointmentDays(request, token, year, month){
-    const response = await request.post('/admin/appointmentdays')
+    const response = await request.post(routes.appointmentDays)
                                   .set('Authorization', `Bearer ${token}`)
                                   .send({year, month})
     return response
 }
 
 async function updateAppointmentDaySlot(request, token, slots){
-    const response =  await request.put('/admin/appointmentday/311')
+    const response =  await request.put(routes.updateAppointmentDay)
                                     .set('Authorization', `Bearer ${token}`)
                                     .send({slots : slots})
     return response
 }
 
 async function createAppointment(request, token,userId, appointmentDayId){
-    const response =  await request.post('/appointment')
+    const response =  await request.post(routes.createAppointment)
                                     .set('Authorization', `Bearer ${token}`)
                                     .send({userId, appointmentDayId})
     return response
@@ -40,7 +41,7 @@ async function resetDb(){
     console.log('Reseting database.....');
     Object.values(db.sequelize.models).map(async function(model){
         await model.destroy({truncate: true, restartIdentity: true})
-        await db.sequelize.query(`DELETE FROM "sqlite_sequence" WHERE "name" = 'Users'`)
+        await db.sequelize.query(`DELETE FROM "sqlite_sequence" WHERE "name" = "${model.tableName}"`)
     })
    
 }
