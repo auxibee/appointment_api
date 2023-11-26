@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 
+const config = require('../server/config/general');
 const statusCodes = require("../server/shared/statusCodes");
 const { createSuperAdmin } = require("../server/shared/utils/createSuperAdmin");
 
@@ -13,11 +14,11 @@ let login;
 before(async function(){
     // reset database
     await resetDb()
-    
+
     // create an admin user
     await createSuperAdmin()
-    login = await loginUser(request, 'fresh@gmail.com','217317auxI*')
-    console.log(login.body);
+    login = await loginUser(request, config.ADMIN_EMAIL,config.ADMIN_PASSWORD)
+    
 })
 
 
