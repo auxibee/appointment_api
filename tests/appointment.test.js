@@ -52,4 +52,25 @@ describe("POST /appointment", function () {
       "Delete appointment before creating another one"
     );
   });
+
+  it("fails with non existing user or appointment day", async () => {
+    const response = await postRequest({
+      url: routes.appointment,
+      token: token,
+      data: { userId: 100, appointmentDayId: 100 },
+    });
+
+    expect(response.status).to.eql(statusCodes.FORBIDDEN);
+    expect(response.body.error).to.eql("Something went wrong");
+  });
+
+  it("fails with empty userId or appontmentDayId", async () => {
+    const response = await postRequest({
+      url: routes.appointment,
+      token: token,
+      data: { userId: "2", appointmentDayId: "" },
+    });
+
+    expect(response.status).to.eql(statusCodes.FORBIDDEN);
+  });
 });
