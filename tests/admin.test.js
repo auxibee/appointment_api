@@ -1,12 +1,13 @@
 require('dotenv').config()
 
-
+const {AppointmentDay} = require('../models')
 const config = require('../server/config/general');
 const statusCodes = require("../server/shared/statusCodes");
 const { createSuperAdmin } = require("../server/shared/utils/createSuperAdmin");
 
-const { request, expect } = require("./config");
-const { loginUser, createAppointmentDays, updateAppointmentDaySlot, resetDb } = require("./utils");
+
+const { request, expect, routes } = require("./config");
+const { loginUser, createAppointmentDays, updateAppointmentDaySlot, resetDb, getRequest } = require("./utils");
 
 
   
@@ -60,7 +61,7 @@ describe('POST /appointmentdays', function(){
         // const appointmentDays = await createAppointmentDays(request,login.body.token, 2023, 12)
 
         const appointmentDay = await updateAppointmentDaySlot(request, login.body.token, 50)
-        console.log(appointmentDay.body);
+       
         expect(appointmentDay.status).to.eql(200)
 
     })
@@ -69,4 +70,28 @@ describe('POST /appointmentdays', function(){
   
    
   })
+ 
+
+describe('GET /appointmentday/:appointmentDayId', function (){
+
+    it('returns appointment day status and slots avialable', async () => {
+        const appointmentDay = await AppointmentDay.create({day : '2023-10-01'})
+
+        const url = routes.appointmentDays + `/${appointmentDay.id}`
+        
+        
+        const appointmentDays = await getRequest({url, token: login.body.token})
+        
+        expect(appointmentDays.status).to.eql(200)
+        expect(appointmentDays.body.slots).to.eql(100)
+        expect(appointmentDays.body.status).to.eql('open')
+        expect(appointmentDays.body.id).to.eql(appointmentDay.id)
+    })
+
+    it('returns 404 with a non existing apppointment day', async () => {
+        const url = routes.appointmentDays + `/100000`
+        const appointmentDays = await getRequest({url, token: login.body.token})
+        expect(appointmentDays.status).to.eql(404)
+    })
+})
   

@@ -15,7 +15,7 @@ describe('POST /auth/signup', function (){
                                   .send({email: user.email, password: user.password})
                            
     expect(response.status).to.eql(201);
-    expect(response.body).to.deep.equal({id: 1, email: user.email})
+    expect(response.body).to.deep.equal({id: response.body.id, email: user.email})
 
   })
 

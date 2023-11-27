@@ -12,6 +12,11 @@ const routes = {
     login: '/auth/login',
     appointmentDays: '/admin/appointmentdays',
     updateAppointmentDay: '/admin/appointmentday/1',
-    createAppointment: '/appointment'
+    appointment: '/appointment',
 }
-module.exports = { request, expect, commonHeaders, routes }
+
+const appointmentDays = {
+    year : 2023,
+    month : 2
+}
+module.exports = { request, expect, commonHeaders, routes, appointmentDays }
