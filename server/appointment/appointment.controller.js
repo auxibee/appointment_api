@@ -9,9 +9,12 @@ async function getUserAppointmentHandler(req, res) {
 }
 
 async function createAppointmentHandler(req, res) {
-  const { userId, appointmentDayId } = req.body;
+  const { appointmentDayId } = req.body;
 
-  const appointment = await Service.createAppointment(userId, appointmentDayId);
+  const appointment = await Service.createAppointment(
+    req.user,
+    appointmentDayId
+  );
 
   res.status(statusCodes.CREATED).json(appointment);
 }

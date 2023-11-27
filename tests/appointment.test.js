@@ -32,7 +32,7 @@ describe("POST /appointment", function () {
     const response = await postRequest({
       url: routes.appointment,
       token: token,
-      data: { userId: user.id, appointmentDayId: appointmentDay.id },
+      data: { appointmentDayId: appointmentDay.id },
     });
 
     expect(response.status).to.eql(statusCodes.CREATED);
@@ -44,7 +44,7 @@ describe("POST /appointment", function () {
     const response = await postRequest({
       url: routes.appointment,
       token: token,
-      data: { userId: user.id, appointmentDayId: appointmentDay.id },
+      data: { appointmentDayId: appointmentDay.id },
     });
 
     expect(response.status).to.eql(statusCodes.FORBIDDEN);
@@ -57,7 +57,7 @@ describe("POST /appointment", function () {
     const response = await postRequest({
       url: routes.appointment,
       token: token,
-      data: { userId: 100, appointmentDayId: 100 },
+      data: { appointmentDayId: 100 },
     });
 
     expect(response.status).to.eql(statusCodes.FORBIDDEN);
@@ -68,7 +68,7 @@ describe("POST /appointment", function () {
     const response = await postRequest({
       url: routes.appointment,
       token: token,
-      data: { userId: "2", appointmentDayId: "" },
+      data: { appointmentDayId: "" },
     });
 
     expect(response.status).to.eql(statusCodes.FORBIDDEN);
