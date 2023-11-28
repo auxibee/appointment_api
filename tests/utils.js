@@ -54,6 +54,12 @@ async function postRequest({ url, token, data }) {
     .send(data);
 }
 
+async function deleteRequest({ url, token }) {
+  return await request
+    .delete(url)
+    .set("Authorization", `Bearer ${token ?? token}`);
+}
+
 async function resetDb() {
   console.log("Reseting database.....");
   Object.values(db.sequelize.models).map(async function (model) {
@@ -73,4 +79,5 @@ module.exports = {
   resetDb,
   getRequest,
   postRequest,
+  deleteRequest,
 };

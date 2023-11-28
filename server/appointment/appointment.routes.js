@@ -11,7 +11,10 @@ const { appointmentAuth } = require("../shared/middlewares/appointmentAuth");
 const {
   isValidAppointment,
 } = require("../shared/middlewares/isValidAppointment");
-const { appointmentValidation } = require("../shared/validation/appointment");
+const {
+  appointmentValidation,
+  appointmentDetailsValidation,
+} = require("../shared/validation/appointment");
 
 const router = expresss.Router();
 
@@ -26,6 +29,7 @@ router.put("/:id", appointmentAuth, updateAppointmentHandler);
 router.delete("/:id", appointmentAuth, deleteAppointmentHandler);
 router.post(
   "/:id/appointmentDetails",
+  appointmentDetailsValidation,
   appointmentAuth,
   addAppointmentDetailHandler
 );

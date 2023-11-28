@@ -24,7 +24,12 @@ class AppointmentService {
   }
 
   async addAppointmentDetail(appointmentId, firstName, lastName) {
-    await AppointmentDetail.create({ appointmentId, firstName, lastName });
+    const details = await AppointmentDetail.create(
+      { appointmentId, firstName, lastName },
+      { returned: true }
+    );
+
+    return details;
   }
 
   async getUserAppointment(userId) {

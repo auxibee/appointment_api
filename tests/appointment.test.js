@@ -1,7 +1,12 @@
 const config = require("../server/config/general");
 const statusCodes = require("../server/shared/statusCodes");
 
-const { Appointment, AppointmentDay, User } = require("../models");
+const {
+  Appointment,
+  AppointmentDay,
+  User,
+  AppointmentDetail,
+} = require("../models");
 const {
   request,
   expect,
@@ -10,7 +15,7 @@ const {
   appointmentDays,
 } = require("./config");
 
-const { resetDb, postRequest } = require("./utils");
+const { resetDb, postRequest, getRequest, deleteRequest } = require("./utils");
 
 const { faker } = require("@faker-js/faker");
 const { generateToken } = require("../server/shared/utils/token");
@@ -29,14 +34,14 @@ describe("POST /appointment", function () {
   });
 
   it("creates a new appointment", async function () {
-    const response = await postRequest({
+    const appointment = await postRequest({
       url: routes.appointment,
       token: token,
       data: { appointmentDayId: appointmentDay.id },
     });
 
-    expect(response.status).to.eql(statusCodes.CREATED);
-    expect(response.body.id).to.eql(1);
+    expect(appointment.status).to.eql(statusCodes.CREATED);
+    expect(appointment.body.id).to.eql(1);
   });
 
   it("fails when appointment has already been created", async () => {
@@ -72,5 +77,99 @@ describe("POST /appointment", function () {
     });
 
     expect(response.status).to.eql(statusCodes.FORBIDDEN);
+  });
+
+  it("add appointment details ", async () => {
+    const details = {
+      firstName: faker.internet.userName(),
+      lastName: faker.internet.userName(),
+    };
+
+    // create appointment
+    const appointment = await Appointment.create({
+      userId: user.id,
+      appointmentDayId: appointmentDay.id,
+    });
+    const appointmentDetails = await postRequest({
+      url: routes.appointment + `/${1}` + "/appointmentDetails",
+      token: token,
+      data: { firstName: details.firstName, lastName: details.lastName },
+    });
+
+    expect(appointmentDetails.status).to.eql(statusCodes.CREATED);
+    expect(appointmentDetails.body.firstName).to.eql(details.firstName);
+  });
+
+  it("fails with a non existing appointment", async () => {
+    const details = {
+      firstName: faker.internet.userName(),
+      lastName: faker.internet.userName(),
+    };
+
+    const appointmentDetails = await postRequest({
+      url: routes.appointment + `/${7999}` + "/appointmentDetails",
+      token: token,
+      data: { firstName: details.firstName, lastName: details.lastName },
+    });
+    expect(appointmentDetails.status).to.eql(statusCodes.UNAUTHOURIZED);
+    expect(appointmentDetails.body.error).to.eql(
+      "Appointment not found for user"
+    );
+  });
+
+  it("fails with an empty first name or last name", async () => {
+    const details = {
+      firstName: faker.internet.userName(),
+      lastName: faker.internet.userName(),
+    };
+
+    const appointmentDetailsWithoutFirstName = await postRequest({
+      url: routes.appointment + `/${1}` + "/appointmentDetails",
+      token: token,
+      data: { firstName: "", lastName: details.lastName },
+    });
+    expect(appointmentDetailsWithoutFirstName.status).to.eql(
+      statusCodes.FORBIDDEN
+    );
+
+    const appointmentDetailsWithoutLastName = await await postRequest({
+      url: routes.appointment + `/${1}` + "/appointmentDetails",
+      token: token,
+      data: { firstName: details.firstName, lastName: "" },
+    });
+
+    expect(appointmentDetailsWithoutFirstName.status).to.eql(
+      statusCodes.FORBIDDEN
+    );
+    expect(appointmentDetailsWithoutLastName.status).to.eql(
+      statusCodes.FORBIDDEN
+    );
+  });
+
+  it("Deletes an appointment detail", async () => {
+    const details = {
+      firstName: faker.internet.userName(),
+      lastName: faker.internet.userName(),
+    };
+
+    // create appointment
+    const appointment = await Appointment.create({
+      userId: user.id,
+      appointmentDayId: appointmentDay.id,
+    });
+
+    // create appointment detail
+    const detail = await AppointmentDetail.create({
+      appointmentId: appointment.id,
+      firstName: details.firstName,
+      lastName: details.lastName,
+    });
+
+    const deleteDetails = await deleteRequest({
+      url: routes.appointment + `/${detail.id}` + "/appointmentDetails",
+      token: token,
+    });
+
+    expect(deleteDetails.status).to.eql(204);
   });
 });

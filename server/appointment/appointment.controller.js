@@ -22,8 +22,8 @@ async function createAppointmentHandler(req, res) {
 async function addAppointmentDetailHandler(req, res) {
   const { firstName, lastName } = req.body;
   const { id } = req.params;
-  Service.addAppointmentDetail(id, firstName, lastName);
-  res.json({ message: "created" });
+  const details = await Service.addAppointmentDetail(id, firstName, lastName);
+  res.status(statusCodes.CREATED).json(details);
 }
 
 async function updateAppointmentHandler(req, res) {
@@ -40,9 +40,9 @@ async function deleteAppointmentHandler(req, res) {
 }
 
 async function deleteAppointmentDetailHandler(req, res) {
-  const { detailId } = req.query;
-  await Service.deleteAppointmentDetail(detailId);
-  res.json({ message: "deleted" });
+  const { id } = req.params;
+  await Service.deleteAppointmentDetail(id);
+  res.status(statusCodes.NO_CONTENT).json({});
 }
 
 module.exports = {

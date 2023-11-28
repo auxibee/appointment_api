@@ -12,4 +12,20 @@ const appointmentValidation = [
   requestValidator,
 ];
 
-module.exports = { appointmentValidation };
+const appointmentDetailsValidation = [
+  check("firstName")
+    .notEmpty()
+    .withMessage("First Name is required")
+    .isString()
+    .withMessage("First Name should be valid"),
+
+  check("lastName")
+    .notEmpty()
+    .withMessage("Last Name is required")
+    .isString()
+    .withMessage("Last Name should be valid"),
+
+  requestValidator,
+];
+
+module.exports = { appointmentValidation, appointmentDetailsValidation };
