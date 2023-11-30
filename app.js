@@ -13,8 +13,6 @@ const {
 } = require("./server/shared/middlewares/errorHandler");
 
 const { requireAuth } = require("./server/shared/middlewares/authRequired");
-const { createSuperAdmin } = require("./server/shared/utils/createSuperAdmin");
-const config = require("./server/config/general");
 
 const app = express();
 
