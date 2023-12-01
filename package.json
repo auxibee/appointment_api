@@ -44,7 +44,9 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.3.1",
+    "axios": "^1.6.2",
     "chai": "^4.3.10",
+    "chai-subset": "^1.6.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.52.0",
     "eslint-config-airbnb": "^19.0.4",
