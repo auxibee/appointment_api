@@ -8,7 +8,7 @@
     "start-test-server": "cross-env NODE_ENV=test node bin/www.js",
     "dev": "nodemon www/bin.js",
     "migrate-testdb": "npx sequelize db:migrate --env=test",
-    "test": "cross-env NODE_ENV=test mocha --recursive  tests/ --reporter spec",
+    "test": "cross-env NODE_ENV=test mocha --recursive  tests/  --watch",
     "lint": "eslint"
   },
   "repository": {
