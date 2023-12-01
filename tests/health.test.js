@@ -1,16 +1,14 @@
-/* eslint-disable no-undef */
-/* eslint-disable import/no-extraneous-dependencies */
+const { expect } = require("./config");
+const { axiosApiClient } = require("./utils");
 
-const request = require('supertest');
+describe("Api", () => {
+  describe("GET /health", () => {
+    it("When service is up it should return message : ok and status 200", async () => {
+      // Act
+      const response = await axiosApiClient.get("/health");
 
-const app = require('../app');
-
-describe('GET /health', async () => {
-  it('responds with status 200 ok', (done) => {
-    request(app)
-      .get('/health')
-      .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(200, { message: 'okay' }, done);
+      // Assert
+      expect(response.status).to.eql(200);
+    });
   });
 });

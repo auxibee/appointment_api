@@ -10,7 +10,7 @@ const errorHandler = async (error, req, res, next) => {
 
   const message = status === 500 ? "Internal server error" : error.message;
 
-  res.status(status).json({ error: message });
+  res.status(status).json({ error: error.message });
 };
 
 module.exports = { noRouteHandler, errorHandler };

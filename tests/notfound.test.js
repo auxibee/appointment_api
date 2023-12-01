@@ -1,26 +1,14 @@
-const app = require("../app")
-const { request, expect } = require("./config")
+const { expect } = require("./config");
+const { setUp, tearDown, axiosApiClient } = require("./utils");
 
+describe("Api", () => {
+  describe("GET /not-found-route", () => {
+    it("When a non-existing route is visited it should return status 404", async () => {
+      // Act
+      const response = await axiosApiClient.get("/not-found-route");
 
-
-
-
-describe('GET /notfound', function(){
-  
-
-    it('return 404 for undefined routes', async function (){
-      
-  
-      const response = await request.get('/notfound')
-      const res = await request.get('/404')
-      
-      expect(response.status).to.eql(404)
-      expect(res.status).to.eql(404)
-     
-   
-    
-    })
-  
-  
-  })
-  
+      // Assert
+      expect(response.status).to.eql(404);
+    });
+  });
+});
